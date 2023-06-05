@@ -5,7 +5,7 @@ import { ReactComponent as Hamburger } from '../assets/Hamburger.svg'
 import { ReactComponent as Close } from '../assets/Close.svg'
 
 const Sidebar:React.FC = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(true)
+  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false)
   const slideStyle:string = !isSidebarOpen ? "-left-40" : "left-0"
 
   const handleLinkClick:() => void = () =>{

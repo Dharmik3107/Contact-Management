@@ -16,7 +16,9 @@ const App:React.FC = ()  => {
         <Route path="/" element={<Home />} >
           <Route index element={<Contact />}/>
           <Route path='create-contact' element={<CreateContact />}/>
-          <Route path='edit-contact' element={<EditContact />}/>
+          <Route path='edit-contact' element={<EditContact />}>
+            <Route path=':id' element={<EditContact/>}/>
+          </Route>
           <Route path='maps-charts' element={<MapsAndCharts />}/>
         </Route>
       </Routes>
