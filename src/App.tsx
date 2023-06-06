@@ -15,7 +15,7 @@ const MapsAndCharts = lazy(() => import('./pages/MapsAndCharts'));
 //App Component with Suspense-fallback UI
 const App:React.FC = ()  => {
   return (
-    <main className='w-screen h-screen'>
+    <main className='w-screen h-screen bg-apricot'>
       <Suspense fallback={<Loader/>} >
         <Routes>
           <Route path="/" element={<Home />} >
