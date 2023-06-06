@@ -5,6 +5,8 @@ import ContactForm from '../components/ContactForm'
 import { FormTypes } from '../types/formType'
 
 const CreateContact:React.FC = () => {
+
+  //Default Values for Form Fields to pass on
   const defaultValues:FormTypes = {
     id: Date.now().toString(),
     firstname: "",

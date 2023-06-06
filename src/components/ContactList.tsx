@@ -3,6 +3,7 @@ import React from 'react'
 import ContactCard from './ContactCard'
 import { FormTypes } from './../types/formType';
 
+//Define types of Props
 interface Props {
   list: FormTypes[]
 }

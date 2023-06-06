@@ -1,5 +1,5 @@
 import React from 'react'
-import {useNavigate} from "react-router-dom"
+import {Link} from "react-router-dom"
 
 import { useAppDispatch } from '../store/hooks';
 import { remove } from '../store/slices/ContactSlice';
@@ -7,6 +7,7 @@ import { remove } from '../store/slices/ContactSlice';
 import Button from './Button'
 import { FormTypes } from '../types/formType';
 
+//Define Types for Props required for component
 interface Props {
     id:string;
     firstName : string;
@@ -16,20 +17,19 @@ interface Props {
 }
 
 const ContactCard:React.FC<Props> = ({id, firstName, lastName, isActive, status}:Props) => {
-  const navigate = useNavigate()
 
+  //Typed Hooks to avoid unneccesory errors while passing parameters
   const dispatch = useAppDispatch()
 
-  const handleEditClick:() => void = () => {
-    navigate(`/edit-contact/${id}`)
-  }
-
+  //Define types for Form
   const formData:FormTypes = {
     id:id,
     firstname:firstName,
     lastname:lastName,
     status:status
   }
+
+  //Function to delete contact from list
   const handleDeleteClick:() => void = () => {
     dispatch(remove(formData))
   }
@@ -38,7 +38,7 @@ const ContactCard:React.FC<Props> = ({id, firstName, lastName, isActive, status}
         <h1 className='font-bold font-openSans text-2xl'>{firstName} {lastName}</h1>
         <h5 className='text-lg'>{isActive ? "Active" : "Inactive"}</h5>
         <div className='w-full h-fit flex justify-center items-center gap-2'>
-            <Button buttonText='Edit' buttonType='edit' onClick={handleEditClick}/>
+            <Link to={`/edit-contact/${id}`} className='w-full max-w-[150px]'><Button buttonText='Edit' buttonType='edit'/></Link>
             <Button buttonText='Delete' buttonType='delete' onClick={handleDeleteClick}/>
         </div>
 

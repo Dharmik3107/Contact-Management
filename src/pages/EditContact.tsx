@@ -6,10 +6,15 @@ import { useAppSelector } from '../store/hooks';
 import { FormTypes } from '../types/formType';
 
 const EditContact:React.FC = () => {
+
+  //Collecting id from URL
   const {id} = useParams();
   const navigate = useNavigate()
-  const data = useAppSelector(state => state.contact.data)
 
+  //Fetching Contact List from Redux Store
+  const contactList = useAppSelector(state => state.contact.data)
+
+  //Default Values for Form Fields to pass on
   const defaultValues:FormTypes = {
     id: Date.now().toString(),
     firstname: "",
@@ -17,10 +22,10 @@ const EditContact:React.FC = () => {
     status:""
   }
 
+  //Finding the particular contact details from list of contacts 
+  const formValues:FormTypes = contactList.filter((element) => element.id === id)[0] || defaultValues
 
-
-  const formValues:FormTypes = data.filter((element) => element.id === id)[0] || defaultValues
-
+  //Sideeffect to navigate to home page if particular contact is not found in list
   useEffect(() => {
     if(formValues === defaultValues) navigate("/")
   })

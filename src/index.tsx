@@ -10,7 +10,7 @@ import App from './App';
 
 import './index.css';
 
-
+//Define React Query client
 const client:QueryClient = new QueryClient({
   defaultOptions : {
     queries: {

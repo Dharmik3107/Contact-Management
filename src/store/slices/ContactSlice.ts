@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import type { RootState } from "../store"
 import type { FormTypes } from "../../types/formType"
 
+//Define types of initial State
 interface ContactList {
     data: FormTypes[]
 }
 
+//Define initial state
 const initialState:ContactList = {
     data : []
 }
@@ -36,7 +37,5 @@ export const contactSlice = createSlice({
 })
 
 export const { create, remove, edit } = contactSlice.actions
-
-export const selectContact = (state: RootState) => state.contact.data
 
 export default contactSlice.reducer

@@ -1,5 +1,6 @@
 import React from 'react'
 
+//Define types of Props
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;
     name:string

@@ -10,30 +10,27 @@ import Button from './Button'
 
 import { FormTypes } from '../types/formType'
 
+//Define types of Props
 interface Props {
   defaultValues : FormTypes
   formType: string
 }
 
 const ContactForm:React.FC<Props> = ({defaultValues, formType}:Props) => {
-  // const defaultValues:FormTypes = {
-  //   id: Date.now().toString(),
-  //   firstname: "",
-  //   lastname:"",
-  //   status:""
-  // }
 
+  //State to collect form values 
   const [formValues, setFormValues] = useState<FormTypes>(defaultValues)
-  const navigate = useNavigate()
 
-  // const contactList = useAppSelector((state) => state.contact.data)
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
  
+  //Function to handle user typing and storing it into formValues
   const handleValueChange:(event:React.ChangeEvent<HTMLInputElement>) => void = (event) => {
     const {value, name} = event.target
     setFormValues(defaultValues => ({...defaultValues, [name]:value}))
   }
 
+  //Function to handle form submit
   const handleFormSubmit:(event:React.FormEvent<HTMLFormElement>)=>void = (event) => {
     event.preventDefault()
     if(formType === "create") dispatch(create(formValues))

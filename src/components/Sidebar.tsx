@@ -5,17 +5,24 @@ import { ReactComponent as Hamburger } from '../assets/Hamburger.svg'
 import { ReactComponent as Close } from '../assets/Close.svg'
 
 const Sidebar:React.FC = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false)
-  const slideStyle:string = !isSidebarOpen ? "-left-40" : "left-0"
 
+  //State to manage sidebar close and open event
+  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false)
+
+  //Style to hide and display sidebar
+  const slideStyle:string = !isSidebarOpen ? "-left-80" : "left-0"
+
+  //Function to handle Link click
   const handleLinkClick:() => void = () =>{
     setSidebarOpen(false)
   }
 
+  //Function to handle hamburger icon click
   const handleHamburgerClick:() => void = () =>{
     setSidebarOpen(true)
   }
 
+  //Function to handle close icon click
   const handleCloseClick:() => void = () => {
     setSidebarOpen(false) 
   }

@@ -4,45 +4,51 @@ import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import {CategoryScale , Chart, LinearScale, PointElement, LineElement, Title, Tooltip, Legend} from 'chart.js';
+import { icon as MarkIcon } from 'leaflet';
+
+import Loader from '../components/Loader';
+
 import MarkerSVG from "../assets/Marker.svg"
 
-import { icon as MarkIcon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+
+//Registering the scale and required properties to work with charts
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const WORLD_CASES_URL = 'https://disease.sh/v3/covid-19/all';
+//API endpoint to fetch data from
 const COUNTRY_CASES_URL = 'https://disease.sh/v3/covid-19/countries';
 const GRAPH_DATA_URL = 'https://disease.sh/v3/covid-19/historical/all?lastdays=all';
 
 const MapsAndCharts: React.FC = () => {
-  const fetchWorldCases = async () => {
-    const response = await axios.get(WORLD_CASES_URL);
-    return response.data;
-  };
 
+  //Function to handle fetching data async way
   const fetchCountryCases = async () => {
     const response = await axios.get(COUNTRY_CASES_URL);
     return response.data;
   };
 
+  //Function to handle fetching data async way
   const fetchGraphData = async () => {
     const response = await axios.get(GRAPH_DATA_URL);
     return response.data;
   };
 
-  const { data: worldData, isLoading: isWorldLoading, isError: isWorldError } = useQuery(['world'], fetchWorldCases);
+  //Getting the state of promise while fetching to display on screen based on state
   const { data: countryData, isLoading: isCountryLoading, isError: isCountryError } = useQuery(['country'], fetchCountryCases);
   const { data: graphData, isLoading: isGraphLoading, isError: isGraphError } = useQuery(['graph'], fetchGraphData);
 
-  if (isWorldLoading || isCountryLoading || isGraphLoading) {
-    return <div className='w-full h-full flex justify-center items-center'><div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>;
+  //If Loading state then Spinner will be displayed
+  if ( isCountryLoading || isGraphLoading) {
+    return <div className='w-full h-full flex justify-center items-center'><Loader /></div>;
   }
 
-  if (isWorldError || isCountryError || isGraphError) {
-    return <div>Error fetching data</div>;
+  //If Error while fetching then Error Fetching Data will be displayed
+  if ( isCountryError || isGraphError) {
+    return <div className='w-full h-full flex justify-center items-center'>Error fetching data</div>;
   }
-  // Line graph data
+
+  //Prepare Line graph data
   const graphDates = Object.keys(graphData.cases);
   const graphCases = Object.values(graphData.cases);
   const graphDataSets = [
@@ -71,6 +77,7 @@ const MapsAndCharts: React.FC = () => {
     },
   };
 
+  //Define Country Object type
   interface CountryData {
     country: string;
     active: number;
@@ -83,7 +90,7 @@ const MapsAndCharts: React.FC = () => {
     };
   }
 
-  // Map data
+  //Prepare Map data and return  Marker JSX for Map with custom icon 
   const mapMarkers = countryData.map((country: CountryData, index:number) => {
     // const iconUrl = `https://www.countryflags.io/${country.countryInfo.iso2}/flat/64.png`;
     const markerIcon = MarkIcon({
